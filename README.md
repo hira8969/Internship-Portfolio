@@ -81,7 +81,7 @@ backend/
 ## Production Deployment
 
 - Frontend: deploy on Vercel with build command `npm run build` and output directory `frontend/dist`.
-- Backend: deploy on Render with build command `npm install` and start command `npm start`.
+- Backend/full-stack on Render: deploy with build command `npm install && npm run build` and start command `npm start`.
 - Do not use `npm run dev` in production because it starts Vite, Nodemon, and Concurrently.
 
 More details live in [API documentation](docs/API.md) and [deployment guide](docs/DEPLOYMENT.md).
