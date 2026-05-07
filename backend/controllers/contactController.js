@@ -37,6 +37,6 @@ export const createContact = asyncHandler(async (req, res) => {
     ? await Contact.create(payload)
     : await saveContactFallback(payload);
 
-  await sendContactEmail(contact).catch(() => null);
   res.status(201).json({ success: true, data: { item: contact } });
+  sendContactEmail(contact).catch(() => null);
 });

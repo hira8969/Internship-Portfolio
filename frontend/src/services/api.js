@@ -1,6 +1,10 @@
 import axios from 'axios';
 
 const configuredApiUrl = import.meta.env.VITE_API_URL;
+const configuredTimeout = Number(import.meta.env.VITE_API_TIMEOUT_MS);
+const requestTimeout = Number.isFinite(configuredTimeout) && configuredTimeout > 0
+  ? configuredTimeout
+  : 45000;
 const isBrowser = typeof window !== 'undefined';
 const isProductionHost = isBrowser && !['localhost', '127.0.0.1'].includes(window.location.hostname);
 const pointsToLocalhost = configuredApiUrl && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/api\/?$/i.test(configuredApiUrl);
@@ -12,7 +16,7 @@ const apiBaseURL = isProductionHost && pointsToLocalhost
 export const api = axios.create({
   baseURL: apiBaseURL,
   withCredentials: true,
-  timeout: 15000
+  timeout: requestTimeout
 });
 
 api.interceptors.request.use((config) => {

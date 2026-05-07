@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "local-1778194340667",
+    "name": "Hira lal Kumar",
+    "email": "hk2493200@gmail.com",
+    "subject": "java",
+    "message": "test message",
+    "ip": "::ffff:127.0.0.1",
+    "userAgent": "node",
+    "status": "new",
+    "createdAt": "2026-05-07T22:52:20.667Z",
+    "updatedAt": "2026-05-07T22:52:20.668Z"
+  }
+]
