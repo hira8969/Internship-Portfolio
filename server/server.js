@@ -11,6 +11,12 @@ dotenv.config();
 
 const port = process.env.PORT || 5000;
 
-connectDB().then(() => {
+async function startServer() {
+  await connectDB();
   app.listen(port, () => logger.info(`API running on port ${port}`));
+}
+
+startServer().catch((error) => {
+  logger.error(`Server failed to start: ${error.stack || error.message}`);
+  process.exit(1);
 });
