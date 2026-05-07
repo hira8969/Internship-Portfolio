@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #5f6cff;
+  color-scheme: dark;
+}
+
+:root.light {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(77, 238, 234, 0.18), transparent 30rem),
+    radial-gradient(circle at 85% 0%, rgba(242, 82, 255, 0.16), transparent 28rem),
+    linear-gradient(135deg, #070812 0%, #111426 52%, #080914 100%);
+  color: #f7f8ff;
+}
+
+html.light body {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(95, 108, 255, 0.15), transparent 30rem),
+    radial-gradient(circle at 85% 0%, rgba(77, 238, 234, 0.18), transparent 28rem),
+    linear-gradient(135deg, #f7f8ff 0%, #eef3ff 52%, #ffffff 100%);
+  color: #070812;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+@layer components {
+  .container-shell {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .glass-panel {
+    @apply border border-white/15 bg-white/[0.075] shadow-glow backdrop-blur-2xl;
+  }
+
+  html.light .glass-panel {
+    @apply border-slate-900/10 bg-white/70 text-ink shadow-xl shadow-slate-200/70;
+  }
+
+  .theme-muted {
+    @apply text-white/70;
+  }
+
+  .theme-subtle {
+    @apply text-white/55;
+  }
+
+  html.light .theme-muted {
+    @apply text-slate-700;
+  }
+
+  html.light .theme-subtle {
+    @apply text-slate-500;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, #4deeea, var(--accent), #f252ff, #d8ff63);
+  }
+
+  .premium-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-bold text-white shadow-glow transition duration-300;
+    background: linear-gradient(135deg, var(--accent), #f252ff);
+  }
+
+  .ghost-button {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-5 py-3 text-sm font-bold backdrop-blur-xl transition duration-300 hover:bg-white/20;
+  }
+
+  html.light .ghost-button {
+    @apply border-slate-900/10 bg-white/70 text-ink hover:bg-white;
+  }
+
+  .section-pad {
+    @apply py-20 sm:py-24 lg:py-28;
+  }
+
+  .eyebrow {
+    @apply text-xs font-black uppercase tracking-[0.28em] text-aurora-cyan;
+  }
+}

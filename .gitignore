@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+.env.local
+npm-debug.log*
+server/logs/*.log
+server/uploads/*
+!.gitkeep
