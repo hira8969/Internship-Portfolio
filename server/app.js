@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import cors from 'cors';
@@ -14,6 +15,7 @@ import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const clientDistPath = path.resolve(__dirname, '../dist');
+const clientIndexPath = path.join(clientDistPath, 'index.html');
 
 app.set('trust proxy', 1);
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -29,11 +31,11 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.get('/health', (_, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 app.use('/api', routes);
 
-if (process.env.NODE_ENV === 'production') {
+if (fs.existsSync(clientIndexPath)) {
   app.use(express.static(clientDistPath));
   app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api')) return next();
-    return res.sendFile(path.join(clientDistPath, 'index.html'));
+    return res.sendFile(clientIndexPath);
   });
 }
 
