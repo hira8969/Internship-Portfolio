@@ -1,7 +1,16 @@
 import axios from 'axios';
 
+const configuredApiUrl = import.meta.env.VITE_API_URL;
+const isBrowser = typeof window !== 'undefined';
+const isProductionHost = isBrowser && !['localhost', '127.0.0.1'].includes(window.location.hostname);
+const pointsToLocalhost = configuredApiUrl && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/api\/?$/i.test(configuredApiUrl);
+
+const apiBaseURL = isProductionHost && pointsToLocalhost
+  ? '/api'
+  : configuredApiUrl || '/api';
+
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: apiBaseURL,
   withCredentials: true,
   timeout: 15000
 });
