@@ -1,7 +1,11 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import User from '../models/User.js';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 dotenv.config();
 
 const email = process.env.ADMIN_EMAIL || 'admin@example.com';

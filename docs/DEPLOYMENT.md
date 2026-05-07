@@ -21,7 +21,7 @@
 
 1. Import the repository into Vercel.
 2. Build command: `npm run build`
-3. Output directory: `dist`
+3. Output directory: `frontend/dist`
 4. Set `VITE_API_URL=https://your-render-service.onrender.com/api`
 5. Set `VITE_SITE_URL=https://your-vercel-domain.vercel.app`
 

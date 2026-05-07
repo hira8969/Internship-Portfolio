@@ -4,20 +4,21 @@ This portfolio is organized as a full-stack project with a clear frontend and ba
 
 ```text
 Persional-Portfolio/
-  public/
-    images/                 Static frontend assets
-    resume.pdf              Public resume download
-  src/                      Frontend React application
-    components/             Reusable UI, layout, animation, form, and section components
-    config/                 Personal site configuration
-    constants/              Portfolio content, education, skills, and project fallback data
-    context/                Theme and authentication providers
-    hooks/                  Reusable frontend hooks
-    pages/                  Public and admin pages
-    routes/                 React Router route configuration
-    services/               API client setup
-    styles/                 Global Tailwind CSS
-  server/                   Backend Express API
+  frontend/                 Frontend Vite React app
+    public/
+      images/               Static frontend assets
+      resume.pdf            Public resume download
+    src/
+      components/           Reusable UI, layout, animation, form, and section components
+      config/               Personal site configuration
+      constants/            Portfolio content, education, skills, and project fallback data
+      context/              Theme and authentication providers
+      hooks/                Reusable frontend hooks
+      pages/                Public and admin pages
+      routes/               React Router route configuration
+      services/             API client setup
+      styles/               Global Tailwind CSS
+  backend/                  Backend Express API
     config/                 Database and Cloudinary configuration
     constants/              Backend constants and roles
     controllers/            Request handlers and CRUD logic

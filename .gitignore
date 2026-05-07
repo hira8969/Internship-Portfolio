@@ -1,8 +1,9 @@
 node_modules
 dist
+frontend/dist
 .env
 .env.local
 npm-debug.log*
-server/logs/*.log
-server/uploads/*
-!.gitkeep
+backend/logs/*.log
+backend/uploads/*
+!backend/uploads/.gitkeep

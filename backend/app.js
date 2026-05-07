@@ -14,7 +14,7 @@ import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const clientDistPath = path.resolve(__dirname, '../dist');
+const clientDistPath = path.resolve(__dirname, '../frontend/dist');
 const clientIndexPath = path.join(clientDistPath, 'index.html');
 const hasClientBuild = fs.existsSync(clientIndexPath);
 
