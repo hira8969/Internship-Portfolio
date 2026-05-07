@@ -23,8 +23,9 @@
 1. Import the repository into Vercel.
 2. Build command: `npm run build`
 3. Output directory: `frontend/dist`
-4. Set `VITE_API_URL=https://your-render-service.onrender.com/api`
+4. Set `VITE_API_URL=/api` when using the included Vercel rewrite, or set it to `https://your-render-service.onrender.com/api` if you do not use rewrites.
 5. Set `VITE_SITE_URL=https://your-vercel-domain.vercel.app`
+6. Keep the `/api/(.*)` rewrite before the SPA `/(.*)` rewrite so API POST requests are forwarded to Render instead of being handled as static frontend routes.
 
 ## Cloudinary
 

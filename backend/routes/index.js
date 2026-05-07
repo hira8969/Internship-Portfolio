@@ -21,6 +21,7 @@ router.use('/projects', projectRoutes);
 router.use('/skills', skillRoutes);
 router.use('/blogs', blogRoutes);
 router.use('/testimonials', testimonialRoutes);
+router.use('/contact', contactRoutes);
 router.use('/contacts', contactRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/services', serviceRoutes);
