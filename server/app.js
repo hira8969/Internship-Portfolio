@@ -16,6 +16,7 @@ const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const clientDistPath = path.resolve(__dirname, '../dist');
 const clientIndexPath = path.join(clientDistPath, 'index.html');
+const hasClientBuild = fs.existsSync(clientIndexPath);
 
 app.set('trust proxy', 1);
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
@@ -31,12 +32,17 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.get('/health', (_, res) => res.json({ status: 'ok', timestamp: new Date().toISOString() }));
 app.use('/api', routes);
 
-if (fs.existsSync(clientIndexPath)) {
+if (hasClientBuild) {
   app.use(express.static(clientDistPath));
-  app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api')) return next();
-    return res.sendFile(clientIndexPath);
-  });
+}
+
+app.get('/', (_, res) => {
+  if (hasClientBuild) return res.sendFile(clientIndexPath);
+  return res.send('API is running successfully');
+});
+
+if (hasClientBuild) {
+  app.get('*', (req, res) => res.sendFile(clientIndexPath));
 }
 
 app.use(notFound);
