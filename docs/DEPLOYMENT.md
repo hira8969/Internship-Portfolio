@@ -12,10 +12,11 @@
 1. Create a new Render Web Service from the repository.
 2. Runtime: Node.
 3. Build command: `npm install`
-4. Start command: `npm run server`
+4. Start command: `npm start`
 5. Add environment variables from `.env.example`.
 6. Set `NODE_ENV=production`.
 7. Set `CLIENT_URL` to the Vercel frontend domain.
+8. Do not use `npm run dev` on Render. Production should run only the Express API with Node.
 
 ## Frontend on Vercel
 

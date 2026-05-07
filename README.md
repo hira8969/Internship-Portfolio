@@ -74,8 +74,15 @@ backend/
 - `npm run dev:client` starts Vite from `frontend/`.
 - `npm run dev:server` starts Express from `backend/` with Nodemon.
 - `npm run build` creates the frontend production build in `frontend/dist`.
-- `npm run server` starts the backend.
+- `npm start` starts the backend in production mode.
+- `npm run server` starts the backend directly.
 - `npm run seed:admin` creates the first admin user.
+
+## Production Deployment
+
+- Frontend: deploy on Vercel with build command `npm run build` and output directory `frontend/dist`.
+- Backend: deploy on Render with build command `npm install` and start command `npm start`.
+- Do not use `npm run dev` in production because it starts Vite, Nodemon, and Concurrently.
 
 More details live in [API documentation](docs/API.md) and [deployment guide](docs/DEPLOYMENT.md).
 See [project structure](docs/PROJECT_STRUCTURE.md) for the frontend/backend folder layout.
