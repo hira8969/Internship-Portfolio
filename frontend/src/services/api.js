@@ -44,7 +44,15 @@ api.interceptors.response.use(
         localStorage.removeItem('accessToken');
       }
     }
-    return Promise.reject(error.response?.data || error);
+    const responseData = error.response?.data;
+    const serverMessage = responseData?.message;
+    const validationMessage = responseData?.errors?.fieldErrors
+      ? Object.values(responseData.errors.fieldErrors).flat().find(Boolean)
+      : '';
+    const statusMessage = error.response?.status ? `Request failed (${error.response.status})` : '';
+    const message = validationMessage || serverMessage || error.message || statusMessage || 'Unable to send message';
+
+    return Promise.reject({ ...responseData, status: error.response?.status, message });
   }
 );
 
@@ -55,7 +63,7 @@ export const portfolioApi = {
   skills: () => api.get('/skills'),
   testimonials: () => api.get('/testimonials'),
   services: () => api.get('/services'),
-  contact: (payload) => api.post('/contacts', payload),
+  contact: (payload) => api.post('/contacts', payload, { withCredentials: false }),
   analytics: () => api.get('/analytics')
 };
 

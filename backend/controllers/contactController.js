@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import mongoose from 'mongoose';
 import Contact from '../models/Contact.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import { logger } from '../utils/logger.js';
 import { sendContactEmail } from '../services/emailService.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,9 +34,16 @@ async function saveContactFallback(contact) {
 
 export const createContact = asyncHandler(async (req, res) => {
   const payload = { ...req.body, ip: req.ip, userAgent: req.get('user-agent') };
-  const contact = mongoose.connection.readyState === 1
-    ? await Contact.create(payload)
-    : await saveContactFallback(payload);
+  let contact;
+
+  try {
+    contact = mongoose.connection.readyState === 1
+      ? await Contact.create(payload)
+      : await saveContactFallback(payload);
+  } catch (error) {
+    logger.error(`Contact database save failed: ${error.message}`);
+    contact = await saveContactFallback(payload);
+  }
 
   res.status(201).json({ success: true, data: { item: contact } });
   sendContactEmail(contact).catch(() => null);

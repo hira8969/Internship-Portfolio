@@ -1,7 +1,7 @@
 import express from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, URL } from 'node:url';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -17,10 +17,36 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const clientDistPath = path.resolve(__dirname, '../frontend/dist');
 const clientIndexPath = path.join(clientDistPath, 'index.html');
 const hasClientBuild = fs.existsSync(clientIndexPath);
+const allowedOrigins = new Set(
+  [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    process.env.CLIENT_URL,
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : ''
+  ]
+    .flatMap((value) => (value || '').split(','))
+    .map((value) => value.trim().replace(/\/$/, ''))
+    .filter(Boolean)
+);
+
+function isAllowedOrigin(origin) {
+  if (!origin) return true;
+  const normalized = origin.replace(/\/$/, '');
+  return allowedOrigins.has(normalized) || /\.vercel\.app$/i.test(new URL(normalized).hostname);
+}
 
 app.set('trust proxy', 1);
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+app.use(cors({
+  origin(origin, callback) {
+    try {
+      return callback(null, isAllowedOrigin(origin));
+    } catch {
+      return callback(null, false);
+    }
+  },
+  credentials: true
+}));
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 300, standardHeaders: true, legacyHeaders: false }));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
